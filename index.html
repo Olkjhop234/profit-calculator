@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profit Calculator</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
         .calculator {
-            max-width: 100%;
+            max-width: 400px;
             margin: 20px auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -21,43 +15,40 @@
         }
         .calculator input,
         .calculator select {
-            width: 100%;
+            width: calc(100% - 20px);
             margin: 10px 0;
             padding: 10px;
-            box-sizing: border-box;
         }
         .calculator button {
-            width: 100%;
-            padding: 10px;
+            padding: 10px 20px;
             background: #007bff;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-sizing: border-box;
         }
         .calculator button:hover {
             background: #0056b3;
         }
-        .result-table, .margin-table {
+        .result-table {
             margin-top: 20px;
             width: 100%;
             border-collapse: collapse;
         }
-        .result-table th, .result-table td,
+        .result-table th, .result-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .margin-table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
         .margin-table th, .margin-table td {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: left;
-            word-wrap: break-word;
-        }
-        @media (max-width: 600px) {
-            .result-table th, .result-table td,
-            .margin-table th, .margin-table td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
         }
     </style>
 </head>
@@ -176,4 +167,3 @@
 
 </body>
 </html>
-

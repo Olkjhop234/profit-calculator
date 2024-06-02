@@ -47,7 +47,7 @@
 <div class="calculator">
     <h2>Profit Calculator</h2>
     <label for="plan">Choose Plan:</label>
-    <select id="plan">
+    <select id="plan" onchange="updateRunsSold()">
         <option value="launch">Launch Plan (10 sessions)</option>
         <option value="growth">Growth Plan (20 sessions)</option>
         <option value="partner">Partner Plan (50 sessions)</option>
@@ -60,21 +60,19 @@
     <table class="result-table" id="result-table">
         <thead>
             <tr>
-                <th>Plan</th>
                 <th>Total Revenue</th>
-                <th>Total Cost</th>
                 <th>Plan Cost</th>
-                <th>Cost per Run</th>
+                <th>Sessions Cost</th>
+                <th>Total Cost</th>
                 <th>Profit</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td id="plan-cell"></td>
                 <td id="revenue-cell"></td>
-                <td id="total-cost-cell"></td>
                 <td id="plan-cost-cell"></td>
                 <td id="run-cost-cell"></td>
+                <td id="total-cost-cell"></td>
                 <td id="profit-cell"></td>
             </tr>
         </tbody>
@@ -82,13 +80,32 @@
 </div>
 
 <script>
+    function updateRunsSold() {
+        const plan = document.getElementById('plan').value;
+        let runsSold = 10;
+
+        switch (plan) {
+            case 'launch':
+                runsSold = 10;
+                break;
+            case 'growth':
+                runsSold = 20;
+                break;
+            case 'partner':
+                runsSold = 50;
+                break;
+        }
+
+        document.getElementById('runs-sold').value = runsSold;
+    }
+
     function calculateProfit() {
         const plan = document.getElementById('plan').value;
         const pricePerSession = parseFloat(document.getElementById('price').value);
         const runsSold = parseInt(document.getElementById('runs-sold').value);
 
         if (isNaN(pricePerSession) || pricePerSession <= 0 || isNaN(runsSold) || runsSold <= 0) {
-            alert("Please enter valid numbers for price per session and runs sold.");
+            alert("Go Buddy Run: Please enter valid numbers for price per session and runs sold.");
             return;
         }
 
@@ -117,18 +134,16 @@
         const totalCost = planCost + runCost;
         const profit = totalRevenue - totalCost;
 
-        document.getElementById('plan-cell').innerText = plan.charAt(0).toUpperCase() + plan.slice(1) + " Plan";
         document.getElementById('revenue-cell').innerText = `$${totalRevenue.toFixed(2)}`;
-        document.getElementById('total-cost-cell').innerText = `$${totalCost.toFixed(2)}`;
         document.getElementById('plan-cost-cell').innerText = `$${planCost.toFixed(2)}`;
         document.getElementById('run-cost-cell').innerText = `$${runCost.toFixed(2)}`;
+        document.getElementById('total-cost-cell').innerText = `$${totalCost.toFixed(2)}`;
         document.getElementById('profit-cell').innerText = `$${profit.toFixed(2)}`;
     }
+
+    // Initialize with default values
+    document.addEventListener("DOMContentLoaded", updateRunsSold);
 </script>
-
-</body>
-</html>
-
 
 </body>
 </html>

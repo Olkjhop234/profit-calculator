@@ -54,6 +54,8 @@
     </select>
     <label for="price">Price per Session ($):</label>
     <input type="number" id="price" placeholder="Enter price per session">
+    <label for="runs-sold">Number of Runs Sold:</label>
+    <input type="number" id="runs-sold" placeholder="Enter number of runs sold">
     <button onclick="calculateProfit()">Calculate Profit</button>
     <table class="result-table" id="result-table">
         <thead>
@@ -61,6 +63,8 @@
                 <th>Plan</th>
                 <th>Total Revenue</th>
                 <th>Total Cost</th>
+                <th>Plan Cost</th>
+                <th>Cost per Run</th>
                 <th>Profit</th>
             </tr>
         </thead>
@@ -68,7 +72,9 @@
             <tr>
                 <td id="plan-cell"></td>
                 <td id="revenue-cell"></td>
-                <td id="cost-cell"></td>
+                <td id="total-cost-cell"></td>
+                <td id="plan-cost-cell"></td>
+                <td id="run-cost-cell"></td>
                 <td id="profit-cell"></td>
             </tr>
         </tbody>
@@ -79,38 +85,50 @@
     function calculateProfit() {
         const plan = document.getElementById('plan').value;
         const pricePerSession = parseFloat(document.getElementById('price').value);
+        const runsSold = parseInt(document.getElementById('runs-sold').value);
 
-        if (isNaN(pricePerSession) || pricePerSession <= 0) {
-            alert("Please enter a valid price per session.");
+        if (isNaN(pricePerSession) || pricePerSession <= 0 || isNaN(runsSold) || runsSold <= 0) {
+            alert("Please enter valid numbers for price per session and runs sold.");
             return;
         }
 
-        let totalRevenue = 0;
-        let totalCost = 0;
+        let totalRevenue = pricePerSession * runsSold;
+        let planCost = 0;
+        let runCost = 0;
 
         switch (plan) {
             case 'launch':
-                totalRevenue = pricePerSession * 10;
-                totalCost = 100 + 30 * 10;
+                planCost = 100;
+                runCost = 30 * runsSold;
                 break;
             case 'growth':
-                totalRevenue = pricePerSession * 20;
-                totalCost = 175 + 25 * 20;
+                planCost = 175;
+                runCost = 25 * runsSold;
                 break;
             case 'partner':
-                totalRevenue = pricePerSession * 50;
-                totalCost = 500 + 20 * 50;
+                planCost = 500;
+                runCost = 20 * runsSold;
                 break;
+            default:
+                console.error("Unknown plan selected");
+                return;
         }
 
+        const totalCost = planCost + runCost;
         const profit = totalRevenue - totalCost;
 
         document.getElementById('plan-cell').innerText = plan.charAt(0).toUpperCase() + plan.slice(1) + " Plan";
         document.getElementById('revenue-cell').innerText = `$${totalRevenue.toFixed(2)}`;
-        document.getElementById('cost-cell').innerText = `$${totalCost.toFixed(2)}`;
+        document.getElementById('total-cost-cell').innerText = `$${totalCost.toFixed(2)}`;
+        document.getElementById('plan-cost-cell').innerText = `$${planCost.toFixed(2)}`;
+        document.getElementById('run-cost-cell').innerText = `$${runCost.toFixed(2)}`;
         document.getElementById('profit-cell').innerText = `$${profit.toFixed(2)}`;
     }
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>

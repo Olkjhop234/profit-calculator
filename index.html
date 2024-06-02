@@ -40,6 +40,16 @@
             padding: 10px;
             text-align: left;
         }
+        .margin-table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .margin-table th, .margin-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +84,14 @@
                 <td id="run-cost-cell"></td>
                 <td id="total-cost-cell"></td>
                 <td id="profit-cell"></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="margin-table" id="margin-table">
+        <tbody>
+            <tr>
+                <th>Profit Margin</th>
+                <td id="margin-cell"></td>
             </tr>
         </tbody>
     </table>
@@ -133,12 +151,14 @@
 
         const totalCost = planCost + runCost;
         const profit = totalRevenue - totalCost;
+        const profitMargin = (profit / totalRevenue) * 100;
 
         document.getElementById('revenue-cell').innerText = `$${totalRevenue.toFixed(2)}`;
         document.getElementById('plan-cost-cell').innerText = `$${planCost.toFixed(2)}`;
         document.getElementById('run-cost-cell').innerText = `$${runCost.toFixed(2)}`;
         document.getElementById('total-cost-cell').innerText = `$${totalCost.toFixed(2)}`;
         document.getElementById('profit-cell').innerText = `$${profit.toFixed(2)}`;
+        document.getElementById('margin-cell').innerText = `${profitMargin.toFixed(2)}%`;
     }
 
     // Initialize with default values

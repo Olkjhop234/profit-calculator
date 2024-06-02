@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator</title>
+    <style>
+        .calculator {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        .calculator input,
+        .calculator select {
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+        }
+        .calculator button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background: #0056b3;
+        }
+        .result-table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-table th, .result-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h2>Profit Calculator</h2>
+    <label for="plan">Choose Plan:</label>
+    <select id="plan">
+        <option value="launch">Launch Plan (10 sessions)</option>
+        <option value="growth">Growth Plan (20 sessions)</option>
+        <option value="partner">Partner Plan (50 sessions)</option>
+    </select>
+    <label for="price">Price per Session ($):</label>
+    <input type="number" id="price" placeholder="Enter price per session">
+    <button onclick="calculateProfit()">Calculate Profit</button>
+    <table class="result-table" id="result-table">
+        <thead>
+            <tr>
+                <th>Plan</th>
+                <th>Total Revenue</th>
+                <th>Total Cost</th>
+                <th>Profit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="plan-cell"></td>
+                <td id="revenue-cell"></td>
+                <td id="cost-cell"></td>
+                <td id="profit-cell"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function calculateProfit() {
+        const plan = document.getElementById('plan').value;
+        const pricePerSession = parseFloat(document.getElementById('price').value);
+
+        if (isNaN(pricePerSession) || pricePerSession <= 0) {
+            alert("Please enter a valid price per session.");
+            return;
+        }
+
+        let totalRevenue = 0;
+        let totalCost = 0;
+
+        switch (plan) {
+            case 'launch':
+                totalRevenue = pricePerSession * 10;
+                totalCost = 100 + 30 * 10;
+                break;
+            case 'growth':
+                totalRevenue = pricePerSession * 20;
+                totalCost = 175 + 25 * 20;
+                break;
+            case 'partner':
+                totalRevenue = pricePerSession * 50;
+                totalCost = 500 + 20 * 50;
+                break;
+        }
+
+        const profit = totalRevenue - totalCost;
+
+        document.getElementById('plan-cell').innerText = plan.charAt(0).toUpperCase() + plan.slice(1) + " Plan";
+        document.getElementById('revenue-cell').innerText = `$${totalRevenue.toFixed(2)}`;
+        document.getElementById('cost-cell').innerText = `$${totalCost.toFixed(2)}`;
+        document.getElementById('profit-cell').innerText = `$${profit.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
